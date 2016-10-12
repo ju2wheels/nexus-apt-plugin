@@ -40,7 +40,7 @@ public class ReleaseGPGGenerator implements FileGenerator {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         PGPSigner signer = this.aptSigningConfiguration.getSigner();
-        PGPSignatureGenerator signatureGenerator = new PGPSignatureGenerator(new BcPGPContentSignerBuilder(signer.getSecretKey().getPublicKey().getAlgorithm(), PGPUtil.SHA1));
+        PGPSignatureGenerator signatureGenerator = new PGPSignatureGenerator(new BcPGPContentSignerBuilder(signer.getSecretKey().getPublicKey().getAlgorithm(), PGPUtil.SHA256));
         signatureGenerator.init(PGPSignature.BINARY_DOCUMENT, signer.getPrivateKey());
 
         BCPGOutputStream out = new BCPGOutputStream(new ArmoredOutputStream(baos));

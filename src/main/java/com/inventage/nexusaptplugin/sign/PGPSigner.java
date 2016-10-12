@@ -78,7 +78,7 @@ public class PGPSigner {
      * @param output the output destination of the signature
      */
     public void clearSign(InputStream input, OutputStream output) throws IOException, PGPException, GeneralSecurityException {
-        int digest = PGPUtil.SHA1;
+        int digest = PGPUtil.SHA256;
 
         PGPSignatureGenerator signatureGenerator = new PGPSignatureGenerator(new BcPGPContentSignerBuilder(privateKey.getPublicKeyPacket().getAlgorithm(), digest));
         signatureGenerator.init(PGPSignature.CANONICAL_TEXT_DOCUMENT, privateKey);
