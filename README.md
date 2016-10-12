@@ -30,6 +30,54 @@ Compatibility
 The plugins might be compatible with earlier Nexus versions, but are not tested.
 
 
+Configuring Release Signing
+---------------------------
+
+APT will noisely complain when updating from a repository with an unsigned
+Packages.gz. 
+
+To configure signing, you need a PGP key. You can generate one by running:
+
+    > gpg --gen-key
+   
+Choose "RSA and RSA (default)", and a key size of 2048. Larger key sizes are
+not supported by this plugin.
+
+Once the key is generated, you can run `gpg --list-keys` to find the 
+ID of the generated key:
+
+    > gpg --list-keys
+    /home/nexus/.gnupg/pubring.gpg
+    ------------------------------
+    pub   2048R/4FE5A5F6 2016-10-08 [expires: 2017-10-08]
+    uid                  Alexander Bertram <alex@bedatadriven.com>
+    sub   2048R/13E1BD68 2016-10-08 [expires: 2017-10-08]
+
+The Key ID can be found following the '2048R/'. For example, the ID above
+is `4FE5A5F6`.
+
+You may have to restart Nexus before continuing.
+
+To configure the plugin to use this key, navigate to "Administration", 
+and then "Capabilities" in the Nexus web interface.
+
+Click the "New" button, choose the type "APT: Configuration", and then
+reply the requested settings, for example:
+
+| Setting                  | Plugin Version                  |
+| ------------------------ | ------------------------------- |
+| Secure keyring location  | /home/nexus/.gnupg/secring.gpg  |
+| Key ID                   | 4FE5A5F6                        |
+| Passphrase for the key   | xxxxxxxxx                       |
+
+
+In order for APT to verify the signature, you must share the public 
+key with your users. One way to do this is to publish your key to
+a key server. For example:
+
+    gpg --keyserver keyserver.ubuntu.com --send-key 4FE5A5F6
+
+
 Debian Packages from a Maven Build Process
 ------------------------------------------
 https://github.com/sannies/blogger-java-deb is a small example on how to create debs in a 
@@ -70,7 +118,12 @@ technology in their Nexus 3.0 release.
 Adding a repository to sources.list
 ===================================
 
-just add the line `deb http://repository.yourcompany.com/content/repositories/releases/ ./`
+First add your PGP key if you have configured signing. If you published your key
+to a key server as described above, you can run:
+
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv-keys 4FE5A5F6
+
+Then add the line `deb http://repository.yourcompany.com/content/repositories/releases/ ./`
 to your `/etc/apt/sources.list`. Type `apt-get update` and all debian packages in the repository
 can now be installed via `apt-get install`.
 
