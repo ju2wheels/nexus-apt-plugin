@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class ReleaseGenerator
@@ -109,6 +110,7 @@ public class ReleaseGenerator
     private String formatDate(Date date) {
         // RFC 2822 format
         final DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH); 
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
         return format.format(date);
     }
 
