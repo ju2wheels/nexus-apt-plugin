@@ -1,4 +1,4 @@
-FROM maven:3-jdk-8-alpine
+FROM maven:3.0.4-jdk-8-alpine
 
 VOLUME [/target]
 
