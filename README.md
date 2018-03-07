@@ -29,6 +29,15 @@ Compatibility
 
 The plugins might be compatible with earlier Nexus versions, but are not tested.
 
+Building
+--------
+
+You can generate the Nexus Apt plugin `jar` by running the following:
+
+```
+NEXUS_APT_PLUGIN_TARGET=./target docker-compose up nexus_apt_plugin
+```
+
 
 Configuring Release Signing
 ---------------------------

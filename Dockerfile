@@ -1,6 +1,6 @@
 FROM maven:3.0.4-jdk-8-alpine
 
-VOLUME [/target]
+VOLUME ["/target"]
 
 COPY . /nexus-apt-plugin/
 RUN  echo -e '#!/bin/bash\nmvn -e package && rm -rf /root/.m2 && cp ./target/nexus-apt-plugin-*-SNAPSHOT.jar /target' >> /usr/bin/nexus-apt-plugin-build && \
