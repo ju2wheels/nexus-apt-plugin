@@ -7,6 +7,9 @@ services:
     image: maven:3.0.4-jdk-8-alpine
   nexus_apt_plugin:
     build:
+      args:
+        NEXUS_BUILD: "05"
+        NEXUS_VERSION: "2.8.0"
       context: ./
     depends_on:
       - maven
